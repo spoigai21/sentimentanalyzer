@@ -1,0 +1,36 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+
+// Define your project's main source set directory
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }
+}
+
+configurations.all {
+    exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+}
+
+dependencies {
+     // Stanford Core NLP library
+    implementation "edu.stanford.nlp:stanford-corenlp:4.5.1"
+    implementation "edu.stanford.nlp:stanford-corenlp:4.5.1:models"
+}
+
+// Define the location where compiled classes will be stored
+buildDir = 'build'
+
+
+// Define a task for running your application (optional)
+task run(type: JavaExec, dependsOn: 'classes') {
+    main = 'com.nlp.SentimentAnalyzer' // Change to your main class
+    classpath = sourceSets.main.runtimeClasspath
+}
+
